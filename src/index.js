@@ -1,9 +1,12 @@
 import { initMongoDB } from './db/initMongoConnection.js';
 import { startServer } from './server.js';
 
-const bootstrap = async () => {
-  await initMongoDB();
-  startServer();
-};
+await initMongoDB();
+startServer(); //because of new version of NODE.JS
 
-bootstrap();
+// const bootstrap = async () => {
+//   await initMongoDB();
+//   startServer();
+// };
+
+// bootstrap();
