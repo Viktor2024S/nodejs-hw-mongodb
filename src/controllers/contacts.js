@@ -1,4 +1,3 @@
-import { ne } from '@faker-js/faker';
 import {
   listContacts,
   getContactById,
@@ -26,7 +25,7 @@ export const getContactByIdController = async (req, res) => {
     throw createHttpError(404, `Contact with id ${contactId} not found`);
   }
 
-  res.json({
+  res.status(200).json({
     status: 200,
     message: `Successfully found contact with id ${contactId}!`,
     data: contact,
@@ -43,28 +42,26 @@ export const createContactController = async (req, res) => {
   });
 };
 
-export const deleteContactController = async (req, res, next) => {
+export const deleteContactController = async (req, res) => {
   const { contactId } = req.params;
   const contact = await deleteContact(contactId);
 
   if (!contact) {
-    next(createHttpError(404, `Contact with id ${contactId} not found`));
-    return;
+    throw createHttpError(404, `Contact with id ${contactId} not found`);
   }
 
   res.status(204).send();
 };
 
-export const upsertContactController = async (req, res, next) => {
+export const upsertContactController = async (req, res) => {
   const { contactId } = req.params;
 
   const result = await updateContact(contactId, req.body, {
     upsert: true,
   });
 
-  if (!result) {
-    next(createHttpError(404, `Contact with id ${contactId} not found`));
-    return;
+  if (!result || !result.contact) {
+    throw createHttpError(404, `Contact with id ${contactId} not found`);
   }
 
   const status = result.isNew ? 201 : 200;
@@ -76,16 +73,15 @@ export const upsertContactController = async (req, res, next) => {
   });
 };
 
-export const patchContactController = async (req, res, next) => {
+export const patchContactController = async (req, res) => {
   const { contactId } = req.params;
   const result = await updateContact(contactId, req.body);
 
-  if (!result) {
-    next(createHttpError(404, `Contact with id ${contactId} not found`));
-    return;
+  if (!result || !result.contact) {
+    throw createHttpError(404, `Contact with id ${contactId} not found`);
   }
 
-  res.json({
+  res.status(200).json({
     status: 200,
     message: 'Successfully patched contact!',
     data: result.contact,

@@ -16,14 +16,14 @@ export const createContact = async (payload) => {
 };
 
 export const deleteContact = async (contactId) => {
-  const deleteContact = await contactsCollection.findOneAndDelete({
+  const deletedContact = await contactsCollection.findOneAndDelete({
     _id: contactId,
   });
-  return deleteContact;
+  return deletedContact;
 };
 
 export const updateContact = async (contactId, payload, options = {}) => {
-  const updateContact = await contactsCollection.findOneAndUpdate(
+  const rawResult = await contactsCollection.findOneAndUpdate(
     { _id: contactId },
     payload,
     {
@@ -33,12 +33,12 @@ export const updateContact = async (contactId, payload, options = {}) => {
     },
   );
 
-  if (!updateContact || !updateContact.value) {
+  if (!rawResult || !rawResult.value) {
     return null;
   }
 
   return {
-    student: updateContact.value,
-    isNew: Boolean(updateContact?.lastErrorObject?.upserted),
+    contact: rawResult.value,
+    isNew: Boolean(rawResult?.lastErrorObject?.upserted),
   };
 };
