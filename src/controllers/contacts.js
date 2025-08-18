@@ -1,4 +1,3 @@
-// src/controllers/contacts.js
 import createHttpError from 'http-errors';
 import { parsePaginationParams } from '../utils/parsePaginationParams.js';
 import { parseSortParams } from '../utils/parseSortParams.js';
@@ -11,6 +10,10 @@ import {
   upsertContact,
   patchContact,
 } from '../services/contacts.js';
+import {
+  createContactSchema,
+  updateContactSchema,
+} from '../validation/contacts.js';
 
 export const getContactsController = async (req, res) => {
   const { page, perPage } = parsePaginationParams(req.query);
@@ -48,6 +51,12 @@ export const getContactByIdController = async (req, res) => {
 };
 
 export const createContactController = async (req, res) => {
+  const { error } = createContactSchema.validate(req.body);
+
+  if (error) {
+    throw createHttpError(400, error.message);
+  }
+
   const contact = await createContact(req.body);
   res.status(201).json({
     status: 201,
@@ -89,6 +98,13 @@ export const upsertContactController = async (req, res) => {
 
 export const patchContactController = async (req, res) => {
   const { contactId } = req.params;
+
+  const { error } = updateContactSchema.validate(req.body);
+
+  if (error) {
+    throw createHttpError(400, error.message);
+  }
+
   const contact = await patchContact(contactId, req.body);
 
   if (!contact) {
