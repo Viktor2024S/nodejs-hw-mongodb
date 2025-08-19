@@ -50,11 +50,11 @@ export const getContactByIdController = async (req, res) => {
   });
 };
 
-export const createContactController = async (req, res) => {
+export const createContactController = async (req, res, next) => {
   const { error } = createContactSchema.validate(req.body);
 
   if (error) {
-    throw createHttpError(400, error.message);
+    return next(error);
   }
 
   const contact = await createContact(req.body);
@@ -96,13 +96,13 @@ export const upsertContactController = async (req, res) => {
   });
 };
 
-export const patchContactController = async (req, res) => {
+export const patchContactController = async (req, res, next) => {
   const { contactId } = req.params;
 
   const { error } = updateContactSchema.validate(req.body);
 
   if (error) {
-    throw createHttpError(400, error.message);
+    return next(error);
   }
 
   const contact = await patchContact(contactId, req.body);
