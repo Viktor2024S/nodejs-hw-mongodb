@@ -5,8 +5,9 @@ export const validateBody = (schema) => (req, res, next) => {
 
   if (error) {
     const validationErrors = error.details.map((detail) => detail.message);
-    next(
-      createHttpError(400, 'Bad Request', {
+
+    return next(
+      createHttpError(400, validationErrors.join(', '), {
         errors: validationErrors,
       }),
     );
