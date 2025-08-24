@@ -1,6 +1,11 @@
 import bcrypt from 'bcrypt';
 import createHttpError from 'http-errors';
+import jwt from 'jsonwebtoken';
 import { User } from '../db/models/user.js';
+import { Session } from '../db/models/session.js';
+import { getEnvVar } from '../utils/getEnvVar.js';
+
+const JWT_SECRET = getEnvVar('JWT_SECRET');
 
 export const registerUser = async (payload) => {
   const userExists = await User.findOne({ email: payload.email });
@@ -14,4 +19,35 @@ export const registerUser = async (payload) => {
     ...payload,
     password: hashedPassword,
   });
+};
+
+export const loginUser = async (payload) => {
+  const user = await User.findOne({ email: payload.email });
+  if (!user) {
+    throw createHttpError(401, 'User not found!');
+  }
+
+  const passwordCompare = await bcrypt.compare(payload.password, user.password);
+  if (!passwordCompare) {
+    throw createHttpError(401, 'Unauthorized');
+  }
+
+  await Session.deleteOne({ userId: user._id });
+
+  const accessToken = jwt.sign({ id: user._id }, JWT_SECRET, {
+    expiresIn: '15m',
+  });
+  const refreshToken = jwt.sign({ id: user._id }, JWT_SECRET, {
+    expiresIn: '30d',
+  });
+
+  const newSession = await Session.create({
+    userId: user._id,
+    accessToken,
+    refreshToken,
+    accessTokenValidUntil: new Date(Date.now() + 15 * 60 * 1000),
+    refreshTokenValidUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+  });
+
+  return newSession;
 };
