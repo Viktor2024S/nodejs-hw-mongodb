@@ -1,4 +1,4 @@
-import { registerUser, loginUser } from '../services/auth.js';
+import { registerUser, loginUser, refreshSession } from '../services/auth.js';
 import { getEnvVar } from '../utils/getEnvVar.js';
 
 const THIRTY_DAYS = 30 * 24 * 60 * 60 * 1000;
@@ -24,6 +24,22 @@ export const loginUserController = async (req, res) => {
   res.status(200).json({
     status: 200,
     message: 'Successfully logged in a user!',
+    data: { accessToken: session.accessToken },
+  });
+};
+
+export const refreshUserController = async (req, res) => {
+  const { refreshToken } = req.cookies;
+  const session = await refreshSession(refreshToken);
+
+  res.cookie('refreshToken', session.refreshToken, {
+    httpOnly: true,
+    expires: new Date(Date.now() + THIRTY_DAYS),
+  });
+
+  res.status(200).json({
+    status: 200,
+    message: 'Successfully refreshed a session!',
     data: { accessToken: session.accessToken },
   });
 };
