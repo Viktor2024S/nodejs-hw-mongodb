@@ -46,8 +46,8 @@ export const loginUser = async (payload) => {
     userId: user._id,
     accessToken,
     refreshToken,
-    accessTokenValidUntil: new Date(Date.now() + 15 * 60 * 1000), // 15 хвилин
-    refreshTokenValidUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 днів
+    accessTokenValidUntil: new Date(Date.now() + 15 * 60 * 1000),
+    refreshTokenValidUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
   });
 
   return newSession;
@@ -82,4 +82,8 @@ export const refreshSession = async (refreshToken) => {
   });
 
   return newSession;
+};
+
+export const logoutUser = async (refreshToken) => {
+  await Session.deleteOne({ refreshToken });
 };
