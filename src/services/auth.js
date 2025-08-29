@@ -123,3 +123,22 @@ export const sendResetEmail = async (email) => {
     );
   }
 };
+
+export const resetPassword = async (token, password) => {
+  let sub;
+  try {
+    const { sub: tokenSub } = jwt.verify(token, JWT_SECRET);
+    sub = tokenSub;
+  } catch (error) {
+    throw createHttpError(401, 'Token expired or is invalid.');
+  }
+
+  const user = await User.findOne({ _id: sub });
+  if (!user) {
+    throw createHttpError(404, 'User not found!');
+  }
+
+  const hashedPassword = await bcrypt.hash(password, 10);
+  await User.findByIdAndUpdate(user._id, { password: hashedPassword });
+  await Session.deleteOne({ userId: user._id });
+};
