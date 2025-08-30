@@ -60,8 +60,21 @@ export const createContactController = async (req, res, next) => {
     return next(error);
   }
   const userId = req.user._id;
+  const photo = req.file;
+  let photoUrl;
 
-  const contact = await createContact(req.body, userId);
+  if (photo) {
+    photoUrl = photo.path;
+  }
+
+  const contact = await createContact(
+    {
+      ...req.body,
+      photo: photoUrl,
+    },
+    userId,
+  );
+
   res.status(201).json({
     status: 201,
     message: 'Successfully created a contact!',
@@ -107,15 +120,26 @@ export const patchContactController = async (req, res, next) => {
     return next(error);
   }
   const userId = req.user._id;
-  const contact = await patchContact(contactId, req.body, userId);
+  const photo = req.file;
+  let photoUrl;
 
-  if (!contact) {
-    throw createHttpError(404, 'Contact not found');
+  if (photo) {
+    photoUrl = photo.path;
+  }
+
+  const result = await patchContact(
+    contactId,
+    { ...req.body, photo: photoUrl },
+    userId,
+  );
+
+  if (!result) {
+    throw createHttpError(404, `Contact with id ${contactId} not found`);
   }
 
   res.status(200).json({
     status: 200,
-    message: `Successfully patched contact with id ${contactId}!`,
-    data: contact,
+    message: 'Successfully patched a contact!',
+    data: result,
   });
 };
