@@ -13,7 +13,9 @@ import {
   updateContactSchema,
 } from '../validation/contacts.js';
 import { authenticate } from '../middlewares/authenticate.js';
-import { upload } from '../middlewares/upload.js';
+import multer from 'multer';
+
+const upload = multer({ storage: multer.diskStorage({}) });
 
 const router = Router();
 

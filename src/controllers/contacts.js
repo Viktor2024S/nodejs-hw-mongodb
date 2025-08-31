@@ -14,6 +14,9 @@ import {
   createContactSchema,
   updateContactSchema,
 } from '../validation/contacts.js';
+import { getEnvVar } from '../utils/getEnvVar.js';
+import { ENV_VARS } from '../constants/envVars.js';
+import { saveFileToCloudinary } from '../utils/saveFileToCloudinary.js';
 
 export const getContactsController = async (req, res) => {
   const { page, perPage } = parsePaginationParams(req.query);
@@ -64,7 +67,11 @@ export const createContactController = async (req, res, next) => {
   let photoUrl;
 
   if (photo) {
-    photoUrl = photo.path;
+    if (getEnvVar(ENV_VARS.ENABLE_CLOUDINARY) === 'true') {
+      photoUrl = await saveFileToCloudinary(photo);
+    } else {
+      photoUrl = `uploads/${photo.filename}`;
+    }
   }
 
   const contact = await createContact(
@@ -124,7 +131,11 @@ export const patchContactController = async (req, res, next) => {
   let photoUrl;
 
   if (photo) {
-    photoUrl = photo.path;
+    if (getEnvVar(ENV_VARS.ENABLE_CLOUDINARY) === 'true') {
+      photoUrl = await saveFileToCloudinary(photo);
+    } else {
+      photoUrl = `uploads/${photo.filename}`;
+    }
   }
 
   const result = await patchContact(
