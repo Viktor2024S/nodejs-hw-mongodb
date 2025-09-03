@@ -1,0 +1,22 @@
+type: object
+properties:
+  _id:
+    type: string
+    description: Unique contact identifier
+    example: '60c72b2f9b1e8b001c8e4d3a'
+  name:
+    type: string
+    description: Name of the contact
+    example: 'John Doe'
+  email:
+    type: string
+    description: Email of the contact
+    example: 'john.doe@example.com'
+  phone:
+    type: string
+    description: Phone number of the contact
+    example: '+380991234567'
+  owner:
+    type: string
+    description: User ID of the contact owner
+    example: '60c72b2f9b1e8b001c8e4d3b'
