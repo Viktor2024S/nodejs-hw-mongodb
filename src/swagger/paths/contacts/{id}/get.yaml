@@ -7,7 +7,7 @@ get:
   security:
     - bearerAuth: []
   parameters:
-    - name: contactId
+    - name: id
       in: path
       description: The ID of the contact to retrieve.
       required: true
@@ -19,10 +19,29 @@ get:
       content:
         application/json:
           schema:
-            $ref: '../../components/schemas/Contact.yaml'
+            type: object
+            required:
+              - status
+              - message
+              - data
+            properties:
+              status:
+                type: integer
+                example: 200
+              message:
+                type: string
+                example: 'Successfully found contact!'
+              data:
+                $ref: '#/components/schemas/Contact'
+    '401':
+      description: Unauthorized.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     '404':
       description: The requested contact was not found.
       content:
         application/json:
           schema:
-            $ref: '../../components/schemas/Error.yaml'
+            $ref: '#/components/schemas/Error'

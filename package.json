@@ -2,7 +2,7 @@
   "name": "nodejs-hw-mongodb",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "type": "module",
   "scripts": {
     "start": "node src/index.js",
@@ -11,7 +11,7 @@
     "format": "prettier --write src/**/*.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npm run build-docs",
-    "build-docs": "redocly bundle src/docs/openapi.yaml --ext json -o docs/swagger.json",
+    "build-docs": "redocly bundle docs/openapi.yaml --ext json -o docs/swagger.json",
     "preview-docs": "redocly preview-docs"
   },
   "keywords": [],

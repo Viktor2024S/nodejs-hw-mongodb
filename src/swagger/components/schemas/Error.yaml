@@ -8,3 +8,9 @@ properties:
     type: string
     description: Error message
     example: 'Not Found'
+  data:
+    type: object
+    properties:
+      message:
+        type: string
+        example: 'Contact not found'
