@@ -1,0 +1,11 @@
+# /contacts:
+#   $ref: './contacts/index.yaml'
+# /contacts/{contactId}:
+#   $ref: './contacts/{contactId}/index.yaml'
+# /auth:
+#   $ref: './auth/index.yaml'
+
+/contacts:
+  $ref: './contacts/index.yaml'
+/auth:
+  $ref: './auth/index.yaml'

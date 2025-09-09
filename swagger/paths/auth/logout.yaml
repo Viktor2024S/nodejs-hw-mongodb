@@ -1,0 +1,17 @@
+post:
+  tags:
+    - Auth
+  summary: Log out user
+  operationId: logoutUser
+  description: Logs out the current user, clearing their session and tokens.
+  security:
+    - bearerAuth: []
+  responses:
+    '204':
+      description: Log out successful
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '../../components/responses/401.yaml'

@@ -1,0 +1,20 @@
+contact:
+  $ref: './contact.yaml'
+contactCreate:
+  $ref: './contact-create.yaml'
+contactUpdate:
+  $ref: './contact-update.yaml'
+authLogin:
+  $ref: './auth-login.yaml'
+authRegister:
+  $ref: './auth-register.yaml'
+authResetEmail:
+  $ref: './auth-reset-email.yaml'
+authResetPwd:
+  $ref: './auth-reset-pwd.yaml'
+googleAuth:
+  $ref: './google-auth.yaml'
+tokensResponse:
+  $ref: './tokens-response.yaml'
+userInfo:
+  $ref: './user-info.yaml'

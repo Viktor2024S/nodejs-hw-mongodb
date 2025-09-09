@@ -1,0 +1,16 @@
+/auth/register:
+  $ref: './register.yaml'
+/auth/login:
+  $ref: './login.yaml'
+/auth/refresh:
+  $ref: './refresh.yaml'
+/auth/logout:
+  $ref: './logout.yaml'
+/auth/send-reset-email:
+  $ref: './send-reset-email.yaml'
+/auth/reset-pwd:
+  $ref: './reset-pwd.yaml'
+/auth/get-current:
+  $ref: './get-current.yaml'
+/auth/google/oauth:
+  $ref: './google-oauth.yaml'

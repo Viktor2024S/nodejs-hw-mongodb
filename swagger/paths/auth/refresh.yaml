@@ -1,0 +1,34 @@
+post:
+  tags:
+    - Auth
+  summary: Refresh tokens
+  operationId: refreshTokens
+  description: Refreshes access and refresh tokens using the refresh token from a cookie.
+  security:
+    - bearerAuth: []
+  responses:
+    '200':
+      description: Tokens successfully refreshed!
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - status
+              - message
+              - data
+            properties:
+              status:
+                type: integer
+                example: 200
+              message:
+                type: string
+                example: Tokens successfully refreshed!
+              data:
+                $ref: '../../components/schemas/tokens-response.yaml'
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '../../components/responses/401.yaml'

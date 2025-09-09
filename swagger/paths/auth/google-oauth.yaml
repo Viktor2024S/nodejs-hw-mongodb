@@ -1,0 +1,43 @@
+post:
+  tags:
+    - Auth
+  summary: Google OAuth
+  operationId: googleOAuth
+  description: Authenticates a user with Google OAuth and returns tokens.
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '../../components/schemas/google-auth.yaml'
+  responses:
+    '200':
+      description: Log in successful!
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - status
+              - message
+              - data
+            properties:
+              status:
+                type: integer
+                example: 200
+              message:
+                type: string
+                example: Log in successful!
+              data:
+                type: object
+                properties:
+                  tokens:
+                    $ref: '../../components/schemas/tokens-response.yaml'
+                  user:
+                    $ref: '../../components/schemas/userInfo.yaml'
+    '400':
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '../../components/responses/400.yaml'

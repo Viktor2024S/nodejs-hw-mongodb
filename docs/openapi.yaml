@@ -1,0 +1,45 @@
+# openapi: 3.1.0
+# info:
+#   title: Contacts API
+#   version: 1.0.0
+#   description: API for managing contacts
+# servers:
+#   - url: http://localhost:3000
+#   - url: https://contacts-app-ppc1.onrender.com
+# tags:
+#   - name: Contacts
+#     description: Operations related to contacts
+#   - name: Auth
+#     description: Operations related to authentication
+# paths:
+#   $ref: '../swagger/paths/index.yaml'
+# components:
+#   securitySchemes:
+#     bearerAuth:
+#       type: http
+#       scheme: bearer
+#   schemas:
+#     $ref: '../swagger/components/schemas/index.yaml'
+
+openapi: 3.1.0
+info:
+  title: Contacts API
+  version: 1.0.0
+  description: API for managing contacts
+servers:
+  - url: http://localhost:3000
+  - url: https://contacts-app-ppc1.onrender.com
+tags:
+  - name: Contacts
+    description: Operations related to contacts
+  - name: Auth
+    description: Operations related to authentication
+paths:
+  $ref: '../swagger/paths/index.yaml'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    $ref: '../swagger/components/schemas/index.yaml'

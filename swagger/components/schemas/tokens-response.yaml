@@ -1,0 +1,8 @@
+type: object
+properties:
+  accessToken:
+    type: string
+    example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1Y2E2N2U3YWU3ZjEwYzg4YjU5ODM4NCIsImlhdCI6MTcxOTk1MjA1NSwiZXhwIjoxNzE5OTU1NjU1fQ.Xq2j8H2d...
+  refreshToken:
+    type: string
+    example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1Y2E2N2U3YWU3ZjEwYzg4YjU5ODM4NCIsImlhdCI6MTcxOTk1MjA1NSwiZXhwIjoxNzI3NzI4MDU1fQ.xV5K1K1K...
