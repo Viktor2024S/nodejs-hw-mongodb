@@ -1,59 +1,49 @@
 tags:
   - Contacts
-summary: Create a new contact
-operationId: createContact
-description: Creates a new contact in the database.
+summary: Create contact
+operationId: createContacts
+description: Create a contact with payload
 security:
   - bearerAuth: []
 requestBody:
   required: true
   content:
-    application/json:
+    multipart/form-data:
       schema:
-        $ref: '../../components/schemas/contact-create.yaml'
+        type: object
+        required:
+          - name
+          - phoneNumber
+        properties:
+          name:
+            description: Contact's name
+            type: string
+            example: John Doe
+          phoneNumber:
+            description: Contact's phone number
+            type: string
+            example: '+380200000000'
+          email:
+            description: Contact's email
+            type: string
+            example: jon.doe@mail.com
+          isFavourite:
+            description: Is the contact a favorite?
+            type: boolean
+            example: true
+          contactType:
+            description: Contact's type
+            type: string
+            enum: [work, home, personal]
+            example: work
+          photo:
+            description: Contact's photo file
+            type: string
+            format: binary
 responses:
   '201':
-    description: Successfully created a new contact!
-    content:
-      application/json:
-        schema:
-          type: object
-          required:
-            - status
-            - message
-            - data
-          properties:
-            status:
-              type: integer
-              example: 201
-            message:
-              type: string
-              example: Successfully created a new contact!
-            data:
-              $ref: '../../components/schemas/contact.yaml'
+    $ref: '../../components/responses/201.yaml'
   '401':
-    description: Unauthorized
-    content:
-      application/json:
-        schema:
-          type: object
-          properties:
-            status:
-              type: integer
-              example: 401
-            message:
-              type: string
-              example: Unauthorized
-  '400':
-    description: Bad Request
-    content:
-      application/json:
-        schema:
-          type: object
-          properties:
-            status:
-              type: integer
-              example: 400
-            message:
-              type: string
-              example: Bad Request
+    $ref: '../../components/responses/401.yaml'
+  '422':
+    $ref: '../../components/responses/422.yaml'
