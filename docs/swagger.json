@@ -108,7 +108,21 @@
             "content": {
               "application/json": {
                 "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
                   "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully found contacts!"
+                    },
                     "data": {
                       "type": "object",
                       "required": [
@@ -124,7 +138,7 @@
                         "data": {
                           "type": "array",
                           "items": {
-                            "$ref": "../../../components/schemas/contact.yaml"
+                            "$ref": "../../components/schemas/contact.yaml"
                           }
                         },
                         "page": {
@@ -152,10 +166,6 @@
                           "example": true
                         }
                       }
-                    },
-                    "message": {
-                      "type": "string",
-                      "example": "Successfully found contacts!"
                     }
                   }
                 }

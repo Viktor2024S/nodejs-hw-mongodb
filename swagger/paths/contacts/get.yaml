@@ -46,7 +46,18 @@ responses:
     content:
       application/json:
         schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
           properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully found contacts!
             data:
               type: object
               required:
@@ -61,7 +72,7 @@ responses:
                 data:
                   type: array
                   items:
-                    $ref: '../../../components/schemas/contact.yaml'
+                    $ref: '../../components/schemas/contact.yaml'
                 page:
                   type: number
                   example: 2
@@ -80,8 +91,5 @@ responses:
                 hasPreviousPage:
                   type: boolean
                   example: true
-            message:
-              type: string
-              example: Successfully found contacts!
   '401':
     $ref: '../../components/responses/401.yaml'
