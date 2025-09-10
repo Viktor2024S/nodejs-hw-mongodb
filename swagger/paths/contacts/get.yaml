@@ -41,7 +41,6 @@ parameters:
       example: false
 responses:
   '200':
-    $ref: '../../components/responses/200.yaml'
     description: Successfully found contacts!
     content:
       application/json:
